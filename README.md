@@ -1,4 +1,4 @@
-# 📄 Arabic PDF Comparison Tool <img src="https://www.boundaryml.com/gemini.png" alt="Gemini Logo" width="40"/>
+# 📄 Arabic PDF Comparison Tool <img src="https://www.boundaryml.com/gemini.png" alt="Gemini Logo" width="100"/>
 
 A modern Streamlit web application that enables **automated comparison between two Arabic PDF documents**. Leveraging the power of **Google Gemini** and **LangChain’s RAG architecture**, this tool performs both **semantic comparisons** and **numerical similarity analysis** using **TF-IDF cosine similarity**.
 
