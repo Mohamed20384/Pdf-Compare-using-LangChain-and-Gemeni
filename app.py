@@ -158,7 +158,13 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.title("Comparison Between Two Arabic PDFs")
+# Title with Gemini logo
+st.markdown("""
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <h1 style="margin: 0;">Arabic PDF Comparison using Gemeni + RAG</h1>
+                <img src="https://www.boundaryml.com/gemini.png" alt="Gemini Logo" width="100">
+            </div>
+        """, unsafe_allow_html=True)
 
 # File upload
 col1, col2 = st.columns(2)
