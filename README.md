@@ -42,3 +42,9 @@ The app provides users with insights into:
 ```bash
 git clone https://github.com/your-username/arabic-pdf-comparator.git
 cd arabic-pdf-comparator
+
+.
+├── app.py                  # Main Streamlit application
+├── requirements.txt        # All Python dependencies
+├── .env                    # Your Google API key (not committed)
+└── README.md               # Project documentation
