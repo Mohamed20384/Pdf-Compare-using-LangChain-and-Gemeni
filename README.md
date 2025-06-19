@@ -38,13 +38,15 @@ The app provides users with insights into:
 ## 📦 Installation & Setup
 
 ### Step 1: Clone the Repository
-
 ```bash
 git clone https://github.com/your-username/arabic-pdf-comparator.git
 cd arabic-pdf-comparator
 
-.
+
+### Project Structure
+```bash
 ├── app.py                  # Main Streamlit application
 ├── requirements.txt        # All Python dependencies
 ├── .env                    # Your Google API key (not committed)
 └── README.md               # Project documentation
+```
