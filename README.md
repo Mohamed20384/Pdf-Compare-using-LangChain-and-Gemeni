@@ -1,38 +1,44 @@
 # 📄 Arabic PDF Comparison Tool
 
-A Streamlit-powered app that compares **two Arabic PDF documents** using both **AI-based natural language comparison (Gemini with RAG)** and **numeric similarity (TF-IDF cosine similarity)**. The tool highlights **similarities, differences**, and computes a **percentage match** with optional download support.
+A modern Streamlit web application that enables **automated comparison between two Arabic PDF documents**. Leveraging the power of **Google Gemini** and **LangChain’s RAG architecture**, this tool performs both **semantic comparisons** and **numerical similarity analysis** using **TF-IDF cosine similarity**.
+
+The app provides users with insights into:
+- Shared and differing content,
+- A human-readable comparison in Arabic,
+- And a measurable similarity score — all with a simple interface and RTL support.
 
 ---
 
-## 🚀 Features
+## 🚀 Key Features
 
-- ✅ Upload **two Arabic PDF files**
-- 🧠 Compare content using **Google Gemini** with **LangChain RAG**
-- 📊 Calculate **similarity score** using **TF-IDF + cosine similarity**
-- 📄 View extracted text previews
-- 🧾 Download comparison results and raw extracted text
-- 🎨 Right-to-left (RTL) Arabic support
-- 🔁 Choose between **detailed** and **summary** comparisons
-
----
-
-## 🛠️ Tech Stack
-
-| Tool | Purpose |
-|------|---------|
-| [Streamlit](https://streamlit.io/) | Web app framework |
-| [Google Generative AI (Gemini)](https://ai.google.dev/) | Natural language document comparison |
-| [LangChain](https://www.langchain.com/) | Text chunking and retrieval |
-| [PyPDF2](https://pypi.org/project/PyPDF2/) | PDF text extraction |
-| [scikit-learn](https://scikit-learn.org/) | TF-IDF vectorization and cosine similarity |
-| [dotenv](https://pypi.org/project/python-dotenv/) | Secure API key loading |
+✅ Upload and preview two Arabic PDF documents  
+🧠 Generate AI-based comparison using **Gemini 2.5 (flash)** with **retrieval-augmented generation (RAG)**  
+📊 Compute text similarity score using **TF-IDF & cosine similarity**  
+📤 Download AI comparison results and extracted document texts  
+🎨 Full support for **Arabic language** and **RTL formatting**  
+🔁 Choose between **detailed** and **summary** comparison styles  
+⚡ Fast performance with caching and chunked embedding strategy
 
 ---
 
-## 📦 Installation
+## 🧱 Tech Stack Overview
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/arabic-pdf-comparator.git
-   cd arabic-pdf-comparator
+| Technology | Role |
+|------------|------|
+| [Streamlit](https://streamlit.io/) | Frontend + backend interface |
+| [Google Generative AI](https://ai.google.dev/) | Natural language comparison engine (Gemini) |
+| [LangChain](https://www.langchain.com/) | Chunking, retrieval, embedding pipeline |
+| [GoogleGenerativeAIEmbeddings](https://github.com/langchain-ai/langchain-google-genai) | Embedding model for document chunks |
+| [PyPDF2](https://pypi.org/project/PyPDF2/) | Extracting selectable text from PDF pages |
+| [scikit-learn](https://scikit-learn.org/) | TF-IDF and cosine similarity computation |
+| [python-dotenv](https://pypi.org/project/python-dotenv/) | Environment variable management |
 
+---
+
+## 📦 Installation & Setup
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/your-username/arabic-pdf-comparator.git
+cd arabic-pdf-comparator
