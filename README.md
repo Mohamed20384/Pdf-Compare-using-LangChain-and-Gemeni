@@ -41,7 +41,7 @@ The app provides users with insights into:
 ```bash
 git clone https://github.com/your-username/arabic-pdf-comparator.git
 cd arabic-pdf-comparator
-
+```
 
 ### Project Structure
 ```bash
