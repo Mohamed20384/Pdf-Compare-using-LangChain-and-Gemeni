@@ -7,7 +7,7 @@ import google.generativeai as genai
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 # Configuration
 class Config:
@@ -67,6 +67,21 @@ def get_top_k_chunks(text, k=Config.TOP_K_CHUNKS):
     top_k_indices = similarities.argsort()[-k:][::-1]
     return [chunks[i] for i in top_k_indices]
 
+def get_similarity_score(text1, text2):
+    prompt = f"""Calculate the similarity percentage between these two documents in Arabic.
+    Provide only the percentage number without any explanation or additional text.
+    Document 1: {text1[:5000]}
+    Document 2: {text2[:5000]}
+    Similarity percentage: """
+    
+    try:
+        model = genai.GenerativeModel("gemini-2.5-flash")
+        response = model.generate_content(prompt)
+        return float(response.text.strip().replace('%', ''))
+    except Exception as e:
+        st.error(f"Error getting similarity score: {str(e)}")
+        return 0
+
 def compare_docs_with_rag(text1, text2, comparison_type="detailed"):
     chunks1 = get_top_k_chunks(text1)
     chunks2 = get_top_k_chunks(text2)
@@ -112,11 +127,6 @@ def compare_docs_with_rag(text1, text2, comparison_type="detailed"):
     except Exception as e:
         return f"Connection Error : {str(e)}"
 
-def numeric_similarity(text1, text2):
-    tfidf = TfidfVectorizer().fit_transform([text1, text2])
-    sim_score = cosine_similarity(tfidf[0:1], tfidf[1:2])[0][0]
-    return sim_score
-
 def show_file_preview(text, title):
     with st.expander(f"Preview: {title}"):
         st.text_area(
@@ -161,7 +171,7 @@ st.markdown("""
 # Title with Gemini logo
 st.markdown("""
             <div style="display: flex; align-items: center; gap: 15px;">
-                <h1 style="margin: 0;">Arabic PDF Comparison using Gemeni + RAG</h1>
+                <h1 style="margin: 0;">Arabic PDF Comparison using Gemini + RAG</h1>
                 <img src="https://www.boundaryml.com/gemini.png" alt="Gemini Logo" width="100">
             </div>
         """, unsafe_allow_html=True)
@@ -184,7 +194,7 @@ if pdf1 and pdf2:
     
     analyze_button = st.button("Analyze")
     
-    if analyze_button:  # This is now properly scoped
+    if analyze_button:
         try:
             with st.spinner("Reading and analyzing files..."):
                 text1 = validate_pdf_text(extract_text_cached(pdf1.read()), pdf1.name)
@@ -198,23 +208,24 @@ if pdf1 and pdf2:
                 show_file_preview(text2, pdf2.name)
             
             progress_bar = st.progress(0)
-            with st.spinner("Comparing with Gemini..."):
-                comparison = compare_docs_with_rag(text1, text2, comparison_type)
-                progress_bar.progress(50)
             
             with st.spinner("Calculating similarity score..."):
-                score = numeric_similarity(text1, text2)
+                score = get_similarity_score(text1, text2)
+                progress_bar.progress(50)
+            
+            with st.spinner("Generating comparison..."):
+                comparison = compare_docs_with_rag(text1, text2, comparison_type)
                 progress_bar.progress(100)
             
             st.success("Analysis complete!")
             
             # Display similarity score with color coding
             st.subheader("Similarity Score")
-            similarity_class = "similarity-high" if score > 0.7 else "similarity-medium" if score > 0.4 else "similarity-low"
+            similarity_class = "similarity-high" if score > 70 else "similarity-medium" if score > 40 else "similarity-low"
             st.markdown(f"""
                 <div style="font-size: 1.2rem;">
-                    Similarity: <span class="{similarity_class}">{score * 100:.2f}%</span><br>
-                    Dissimilarity: <span class="{similarity_class}">{(1 - score) * 100:.2f}%</span>
+                    Similarity: <span class="{similarity_class}">{score:.2f}%</span><br>
+                    Dissimilarity: <span class="{similarity_class}">{100 - score:.2f}%</span>
                 </div>
             """, unsafe_allow_html=True)
             
